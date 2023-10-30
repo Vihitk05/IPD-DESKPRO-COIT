@@ -18,9 +18,10 @@ class Customer(db.Document):
             return {"error": True, "message": str(e)}
         
     @classmethod
-    def get(cls, mobile):
+    def get_customer_by_mobile(cls, mobile):
         try:
-            customer = cls.objects.get(mobile=mobile)
+            customer = cls.objects(mobile=mobile)
             return {"error": False, "data": customer}
         except Exception as e:
+            print(str(e))
             return {"error": True, "message": str(e)}

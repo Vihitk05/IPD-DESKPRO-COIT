@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.employee import Employee as EmployeeModel
-from flask import jsonify
+from flask import jsonify, request
 
 class Employee(Resource):
 
@@ -27,9 +27,8 @@ class Employee(Resource):
         })
     
     def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True)
-        args = parser.parse_args()
+        args = {}
+        args["employee_id"] = request.args.get('employee_id')
 
         response =  EmployeeModel.get_single_employee(args)
         if response["error"]:
